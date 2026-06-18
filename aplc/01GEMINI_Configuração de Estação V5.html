@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stor Sistemas - Gestão de Estações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background-color: white !important; padding: 0 !important; }
+            .container { box-shadow: none !important; border: none !important; max-width: 100% !important; margin: 0 !important; width: 100% !important; }
+            .checklist-item { break-inside: avoid; }
+        }
+        .print-only { display: none; }
+        .tab-active { border-bottom: 4px solid #02727e; color: #02727e; font-bold: 800; }
+        input[type="checkbox"]:checked + span { text-decoration: line-through; color: #6b7280; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+
+    <!-- Navegação Superior (Abas) -->
+    <nav class="bg-white shadow-sm no-print mb-6 border-b border-gray-300">
+        <div class="max-w-4xl mx-auto flex font-semibold">
+            <button onclick="showTab('checklist')" id="btn-tab-checklist" class="flex-1 py-4 text-center transition tab-active text-lg">
+                📝 Novo Checklist
+            </button>
+            <button onclick="showTab('finalizados')" id="btn-tab-finalizados" class="flex-1 py-4 text-center transition text-gray-700 hover:text-[#02727e] text-lg">
+                📂 Finalizados
+            </button>
+        </div>
+    </nav>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 pb-12">
+
+        <!-- ABA: NOVO CHECKLIST -->
+        <div id="tab-checklist" class="space-y-6">
+            <div class="bg-white shadow-xl rounded-xl overflow-hidden border-t-8 border-[#02727e] border border-gray-300">
+                <header class="p-6 border-b border-gray-300 bg-white">
+                    <h1 class="text-2xl font-extrabold text-[#02727e]">Configuração de Estação</h1>
+                    <p class="text-base font-medium text-gray-800 mt-1">Checklist Técnico - Stor Sistemas</p>
+                </header>
+
+                <!-- Cabeçalho do Formulário -->
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50">
+                    <div>
+                        <label class="text-sm font-extrabold text-gray-800 uppercase">Data</label>
+                        <input type="date" id="form-data" class="w-full border-2 border-gray-300 rounded-lg p-2 mt-1 text-gray-900 font-medium focus:ring-2 focus:ring-[#02727e] outline-none">
+                    </div>
+                    <div>
+                        <label class="text-sm font-extrabold text-gray-800 uppercase">Licença / Empresa</label>
+                        <input type="text" id="form-empresa" placeholder="2190 - STOR COMERCIAL" class="w-full border-2 border-gray-300 rounded-lg p-2 mt-1 text-gray-900 font-medium focus:ring-2 focus:ring-[#02727e] outline-none">
+                    </div>
+                    <div>
+                        <label class="text-sm font-extrabold text-gray-800 uppercase">Versão da Estação</label>
+                        <input type="text" id="form-versao" placeholder="04.09.00.00" class="w-full border-2 border-gray-300 rounded-lg p-2 mt-1 text-gray-900 font-medium focus:ring-2 focus:ring-[#02727e] outline-none">
+                    </div>
+                    <div>
+                        <label class="text-sm font-extrabold text-gray-800 uppercase">Suporte Responsável</label>
+                        <input type="text" id="form-suporte" placeholder="Nome do técnico" class="w-full border-2 border-gray-300 rounded-lg p-2 mt-1 text-gray-900 font-medium focus:ring-2 focus:ring-[#02727e] outline-none">
+                    </div>
+                </div>
+
+                <!-- Itens do Checklist -->
+                <div class="p-6 space-y-8" id="items-container">
+                    <!-- Seção 1 -->
+                    <section>
+                        <h2 class="text-base font-extrabold text-gray-800 uppercase mb-4 tracking-wider border-b-2 border-gray-200 pb-2">Procedimentos Gerais</h2>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Salvar credenciais de acesso ao servidor na estação.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Garantir que o caminho ou compartilhamento funcione para emissão de NFe/NFCe.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Registrar DLLs e Configurar Caixa.</span>
+                            </label>
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Configurar o Caixa nos parâmetros da estação.</span>
+                            </label>
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Verificar se o cliente é mercado, açougue ou restaurante.</span>
+                            </label>
+ 			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Perguntar se utiliza balança integrada ao caixa e, se sim, realizar a configuração.</span>
+                            </label>
+
+                        </div>
+                    </section>
+
+                    <!-- Seção 2 -->
+                    <section>
+                        <h2 class="text-base font-extrabold text-gray-800 uppercase mb-4 tracking-wider border-b-2 border-gray-200 pb-2">Configurações de Venda / PDV / Retaguarda</h2>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Configurar impressora e documentos de impressão (NFCe, pedidos, etc.).</span>
+                            </label>
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Configurar abertura de gaveta, se necessário.</span>
+                            </label>
+ 			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Configurar corte parcial na impressora, se aplicável.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-yellow-100 border-2 border-yellow-400 cursor-pointer shadow-sm">
+                                <input type="checkbox" class="chk-item h-7 w-7 rounded border-yellow-500 text-yellow-700 focus:ring-yellow-600">
+                                <div class="flex flex-col">
+                                    <span class="font-extrabold text-yellow-900 uppercase text-base">Solicitar que o cliente realize uma venda de teste para validar: leitor, impressora, gaveta e emissão NFCe.</span>
+                                    <span class="text-sm font-bold text-yellow-800">Leitor, Impressora, Gaveta e NFCe.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+
+                    <!-- Seção 3 -->
+                    <section>
+                        <h2 class="text-base font-extrabold text-gray-800 uppercase mb-4 tracking-wider border-b-2 border-gray-200 pb-2">Ajustes na Pasta Stor</h2>
+                        <div class="space-y-3">
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Excluir executáveis e arquivos .exe e .ini desnecessários (DFe, WSP, FIP, etc.).</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Manter somente Stor.exe, StorPDV e StorATE.</span>
+                            </label>
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Criar atalhos na área de trabalho: Stor.exe e StorPDV.exe (se necessário).</span>
+                            </label>
+                           
+                        </div>
+                    </section>
+		    <!-- Seção 4 -->
+                    <section>
+                        <h2 class="text-base font-extrabold text-gray-800 uppercase mb-4 tracking-wider border-b-2 border-gray-200 pb-2">Personalização e Detalhes Finais</h2>
+                        <div class="space-y-3">
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Verificar se a logo do cliente aparece na tela de login ou no PDV; se não, solicitar e configurar.</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Ajustar opções de energia do Windows para evitar desligamento automático.</span>
+                            </label>
+			    <label class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-300 hover:bg-gray-100 cursor-pointer transition shadow-sm">
+                                <input type="checkbox" class="chk-item h-6 w-6 rounded border-gray-400 text-[#02727e] focus:ring-[#02727e]">
+                                <span class="text-gray-900 font-semibold text-base">Se necessário, instalar o certificado digital no Windows para entrada de notas fiscais.</span>
+                            </label>
+                            
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Footer de Ações -->
+                <footer class="p-6 bg-gray-100 border-t-2 border-gray-300 flex justify-end gap-4 no-print">
+                    <button onclick="limparForm()" class="px-6 py-3 text-gray-700 font-bold hover:text-gray-900 border-2 border-transparent hover:border-gray-400 rounded-lg transition">Limpar Dados</button>
+                    <button onclick="salvarChecklist()" class="bg-[#02727e] text-white px-8 py-3 rounded-lg font-extrabold shadow-lg hover:brightness-110 active:scale-95 transition-all text-lg border-2 border-[#01545d]">
+                        💾 Salvar e Finalizar
+                    </button>
+                </footer>
+            </div>
+        </div>
+
+        <!-- ABA: FINALIZADOS -->
+        <div id="tab-finalizados" class="hidden space-y-4">
+            <div class="flex justify-between items-center mb-4 bg-white p-4 rounded-lg shadow border border-gray-300">
+                <h2 class="text-xl font-extrabold text-gray-900">Histórico de Configurações</h2>
+                <button onclick="limparTudo()" class="text-sm font-bold text-red-600 hover:underline">Limpar Histórico Completo</button>
+            </div>
+            
+            <div id="historico-lista" class="space-y-4">
+                <!-- Cards de histórico injetados aqui -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Overlay de Visualização para Impressão -->
+    <div id="print-view" class="print-only p-8">
+        <!-- Conteúdo para impressão gerado via JS -->
+    </div>
+
+    <script>
+        // Inicialização
+        document.getElementById('form-data').valueAsDate = new Date();
+        atualizarHistorico();
+
+        // Navegação de Abas
+        function showTab(tab) {
+            document.getElementById('tab-checklist').classList.toggle('hidden', tab !== 'checklist');
+            document.getElementById('tab-finalizados').classList.toggle('hidden', tab !== 'finalizados');
+            
+            document.getElementById('btn-tab-checklist').className = tab === 'checklist' ? 'flex-1 py-4 text-center transition tab-active text-lg font-extrabold' : 'flex-1 py-4 text-center transition text-gray-700 hover:text-[#02727e] text-lg font-bold';
+            document.getElementById('btn-tab-finalizados').className = tab === 'finalizados' ? 'flex-1 py-4 text-center transition tab-active text-lg font-extrabold' : 'flex-1 py-4 text-center transition text-gray-700 hover:text-[#02727e] text-lg font-bold';
+            
+            if(tab === 'finalizados') atualizarHistorico();
+        }
+
+        // Lógica de Salvamento
+        function salvarChecklist() {
+            const data = {
+                id: Date.now(),
+                data: document.getElementById('form-data').value,
+                empresa: document.getElementById('form-empresa').value || "2190 - STOR COMERCIAL",
+                versao: document.getElementById('form-versao').value || "04.09.00.00",
+                suporte: document.getElementById('form-suporte').value || "Não informado",
+                items: Array.from(document.querySelectorAll('.chk-item')).map(chk => ({
+                    texto: chk.nextElementSibling.innerText,
+                    checked: chk.checked
+                }))
+            };
+
+            let historico = JSON.parse(localStorage.getItem('stor_history_v2') || '[]');
+            historico.unshift(data);
+            localStorage.setItem('stor_history_v2', JSON.stringify(historico));
+
+            alert('Checklist salvo com sucesso no histórico!');
+            limparForm();
+            showTab('finalizados');
+        }
+
+        function atualizarHistorico() {
+            const container = document.getElementById('historico-lista');
+            const historico = JSON.parse(localStorage.getItem('stor_history_v2') || '[]');
+
+            if (historico.length === 0) {
+                container.innerHTML = `<div class="bg-white p-12 text-center rounded-xl font-bold text-gray-600 border-2 border-dashed border-gray-300">Nenhum registro finalizado encontrado.</div>`;
+                return;
+            }
+
+            container.innerHTML = historico.map(item => `
+                <div class="bg-white p-6 rounded-xl shadow-md border-2 border-gray-300 flex flex-col md:flex-row justify-between items-start md:items-center group hover:border-[#02727e] transition gap-4">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-gray-900">${item.empresa}</h3>
+                        <p class="text-sm text-gray-800 font-bold mt-1 uppercase">${item.data} • Versão: ${item.versao}</p>
+                        <p class="text-sm text-gray-700 font-semibold mt-1">Técnico: <span class="text-gray-900">${item.suporte}</span></p>
+                    </div>
+                    <button onclick="imprimirRegistro(${item.id})" class="bg-gray-200 border-2 border-gray-300 text-[#02727e] px-6 py-3 rounded-lg font-extrabold hover:bg-[#02727e] hover:text-white hover:border-[#01545d] transition w-full md:w-auto">
+                        🖨️ Imprimir Histórico
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function imprimirRegistro(id) {
+            const historico = JSON.parse(localStorage.getItem('stor_history_v2') || '[]');
+            const registro = historico.find(r => r.id === id);
+            
+            const printArea = document.getElementById('print-view');
+            printArea.innerHTML = `
+                <div style="border-bottom: 3px solid #02727e; padding-bottom: 15px; margin-bottom: 25px;">
+                    <h1 style="color: #02727e; margin: 0; font-size: 24px; font-weight: 800;">Relatório de Configuração Stor Sistemas</h1>
+                    <p style="margin: 5px 0; color: #333; font-weight: bold;">Documento de Verificação Técnica</p>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; font-size: 16px;">
+                    <div><strong style="color: #000;">Empresa:</strong> <span style="color: #111;">${registro.empresa}</span></div>
+                    <div><strong style="color: #000;">Data:</strong> <span style="color: #111;">${registro.data}</span></div>
+                    <div><strong style="color: #000;">Versão:</strong> <span style="color: #111;">${registro.versao}</span></div>
+                    <div><strong style="color: #000;">Técnico:</strong> <span style="color: #111;">${registro.suporte}</span></div>
+                </div>
+                <div style="border: 2px solid #ccc; border-radius: 8px; padding: 20px;">
+                    <h3 style="margin-top: 0; font-size: 16px; color: #02727e; font-weight: 800; border-bottom: 1px solid #eee; padding-bottom: 10px;">ITENS CONCLUÍDOS:</h3>
+                    ${registro.items.map(i => `
+                        <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 20px; font-weight: bold; color: ${i.checked ? '#000' : '#999'}">${i.checked ? '☑' : '☐'}</span>
+                            <span style="font-weight: 600; color: ${i.checked ? '#000' : '#888'}; text-decoration: ${i.checked ? 'none' : 'line-through'};">${i.texto}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 50px; border-top: 2px solid #ccc; padding-top: 15px; text-align: center; font-size: 12px; color: #555; font-weight: bold;">
+                    Gerado eletronicamente via Portal Thomas Tech
+                </div>
+            `;
+            
+            window.print();
+        }
+
+        function limparForm() {
+            document.getElementById('form-empresa').value = '';
+            document.getElementById('form-versao').value = '';
+            document.getElementById('form-suporte').value = '';
+            document.querySelectorAll('.chk-item').forEach(chk => chk.checked = false);
+            document.getElementById('form-data').valueAsDate = new Date();
+        }
+
+        function limparTudo() {
+            if(confirm('Atenção: Isso apagará permanentemente todo o histórico salvo neste navegador. Deseja continuar?')) {
+                localStorage.removeItem('stor_history_v2');
+                atualizarHistorico();
+            }
+        }
+    </script>
+</body>
+</html>

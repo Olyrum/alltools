@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escala de Plantões - STOR</title>
+<style>
+@page{size:A4;margin:10mm}
+body{font-family:Arial;margin:0;background:#e5e7eb}
+.container{width:1000px;margin:20px auto;background:#fff;padding:15px}
+.header{display:flex;justify-content:space-between;align-items:center;background:#111;color:#fff;padding:10px 15px}
+.header .left{font-weight:bold}
+.header .center{font-size:18px}
+.header .right{font-size:16px}
+.controls{margin:10px 0;text-align:center}
+input,button{padding:6px;margin:5px;border:1px solid #ccc;border-radius:4px}
+button{background:#111;color:#fff;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{border:1px solid #555;text-align:center;padding:4px}
+th{background:#2f2f2f;color:#fff}
+.tipo{background:#cfcfcf;font-weight:bold;width:90px}
+.dia{font-weight:bold;background:#e5e5e5}
+.input-nome{width:100%;border:none;text-align:center;font-size:12px;background:transparent}
+.actions{margin-top:10px;display:flex;gap:10px}
+@media print{
+.controls,.actions{display:none}
+body{background:#fff}
+.container{margin:0;width:100%}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+<div class="left">STOR SISTEMAS</div>
+<div class="center">ESCALA DE PLANTÕES</div>
+<div class="right" id="mesAno">--</div>
+</div>
+
+<div class="controls">
+<label>Mês:</label>
+<input type="month" id="data">
+<button onclick="gerarTabela()">Gerar Escala</button>
+</div>
+
+<table id="tabela"></table>
+
+<div class="actions">
+<button onclick="salvar()">💾 Salvar</button>
+<button onclick="window.print()">🖨️ Imprimir</button>
+<button onclick="historico()">📊 Histórico</button>
+</div>
+
+</div>
+
+<script>
+function gerarTabela(){
+ const input = document.getElementById('data');
+ if(!input || !input.value){ alert('Selecione o mês'); return; }
+
+ const [ano, mes] = input.value.split('-');
+ const dias = new Date(ano, mes, 0).getDate();
+ const tabela = document.getElementById('tabela');
+ tabela.innerHTML = '';
+
+ const meses=["JANEIRO","FEVEREIRO","MARÇO","ABRIL","MAIO","JUNHO","JULHO","AGOSTO","SETEMBRO","OUTUBRO","NOVEMBRO","DEZEMBRO"];
+ document.getElementById('mesAno').innerText = meses[mes-1] + ' ' + ano;
+
+ const diasSemana=['DOM','SEG','TER','QUA','QUI','SEX','SAB'];
+ const header = document.createElement('tr');
+ header.appendChild(document.createElement('th'));
+ diasSemana.forEach(d=>{
+   const th=document.createElement('th');
+   th.innerText=d;
+   header.appendChild(th);
+ });
+ tabela.appendChild(header);
+
+ const primeiroDia = new Date(ano, mes-1, 1).getDay();
+ let linha = document.createElement('tr');
+ linha.innerHTML = "<td class='tipo'>PLANTÃO</td>";
+
+ for(let i=0;i<primeiroDia;i++){
+   linha.appendChild(document.createElement('td'));
+ }
+
+ for(let d=1; d<=dias; d++){
+   if((linha.children.length-1) % 7 === 0 && d !== 1){
+     tabela.appendChild(linha);
+     linha = document.createElement('tr');
+     linha.innerHTML = "<td class='tipo'>PLANTÃO</td>";
+   }
+
+   const td = document.createElement('td');
+   td.innerHTML = `<div class='dia'>${d}</div><input class='input-nome'>`;
+   linha.appendChild(td);
+ }
+
+ tabela.appendChild(linha);
+}
+
+function salvar(){
+ const html = document.getElementById('tabela').innerHTML;
+ const mes = document.getElementById('mesAno').innerText;
+ const dados = JSON.parse(localStorage.getItem('storEscalas')||'[]');
+ dados.push({mes,html});
+ localStorage.setItem('storEscalas', JSON.stringify(dados));
+ alert('Salvo!');
+}
+
+function historico(){
+ const win = window.open('', '_blank');
+ const dados = JSON.parse(localStorage.getItem('storEscalas')||'[]');
+ let html = '<h2>Histórico de Escalas</h2>';
+ dados.forEach(d=>{
+   html += `<div style='margin:10px;padding:10px;border:1px solid #ccc'>`;
+   html += `<h3>${d.mes}</h3>`;
+   html += `<table>${d.html}</table>`;
+   html += `<button onclick='window.print()'>Imprimir</button>`;
+   html += '</div>';
+ });
+ win.document.write(html);
+}
+</script>
+</body>
+</html>
