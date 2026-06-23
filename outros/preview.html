@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel de Suporte</title>
+
+<style>
+body{
+    font-family:Arial;
+    margin:0;
+    background:#0f172a;
+    color:#fff;
+}
+.header{
+    padding:20px;
+    text-align:center;
+    background:#020617;
+    font-size:22px;
+    font-weight:bold;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    padding:20px;
+}
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.2s;
+    text-align:center;
+}
+.card:hover{
+    transform:scale(1.05);
+    background:#334155;
+}
+.card h3{
+    margin:10px 0;
+    font-size:16px;
+}
+.categoria{
+    margin:20px;
+    font-weight:bold;
+    color:#94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🖥️ Painel de Suporte - Stor Sistemas</div>
+
+<div class="categoria">🌐 Monitoramento</div>
+<div class="grid">
+<div class="card" onclick="abrir('https://monitor.tecnospeed.com.br/')">
+<h3>Monitor TecnoSpeed</h3>
+</div>
+</div>
+
+<div class="categoria">🏢 Servidores</div>
+<div class="grid">
+<div class="card" onclick="abrir('http://192.168.15.245/')">
+<h3>Servidor Interno</h3>
+</div>
+</div>
+
+<div class="categoria">📄 Fiscal</div>
+<div class="grid">
+<div class="card" onclick="abrir('https://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx?tipoConsulta=resumo&tipoConteudo=7PhJ+gAVw2g=&AspxAutoDetectCookieSupport=1')">
+<h3>Consulta NF-e</h3>
+</div>
+
+<div class="card" onclick="abrir('https://www.nfe.fazenda.gov.br/portal/consulta.aspx?tipoConsulta=inutilizacao&tipoConteudo=nDmpH/MjKrg=')">
+<h3>Inutilização NF-e</h3>
+</div>
+
+<div class="card" onclick="abrir('https://www.sefaz.mt.gov.br/nfce/consultanfce')">
+<h3>Consulta NFC-e MT</h3>
+</div>
+
+<div class="card" onclick="abrir('https://www.sefaz.mt.gov.br/nfce/consultainutilizacaonfce')">
+<h3>Inutilização NFC-e MT</h3>
+</div>
+
+<div class="card" onclick="abrir('https://www.sefaz.rs.gov.br/nfe/nfe-val.aspx')">
+<h3>Validação NF-e RS</h3>
+</div>
+</div>
+
+<div class="categoria">🧾 Sistemas e Ferramentas</div>
+<div class="grid">
+<div class="card" onclick="abrir('https://versoes.syspdv.com.br/')">
+<h3>Versões SysPDV</h3>
+</div>
+
+<div class="card" onclick="abrir('https://consopt.www8.receita.fazenda.gov.br/consultaoptantes')">
+<h3>Consulta Simples Nacional</h3>
+</div>
+
+<div class="card" onclick="abrir('https://www.poscontrole.com.br/equipamentos-homologados')">
+<h3>Equipamentos Homologados</h3>
+</div>
+
+<div class="card" onclick="abrir('https://github.com/ElginDeveloperCommunity/ElginTEFHUB/wiki/%5BElgin-TEF-Hub%5D-Fun%C3%A7%C3%A3o-Manuten%C3%A7%C3%A3o-via-Opera%C3%A7%C3%A3o-Administrativa')">
+<h3>Wiki Elgin TEF</h3>
+</div>
+</div>
+
+<script>
+function abrir(url){
+    window.open(url,'_blank');
+}
+</script>
+
+</body>
+</html>
