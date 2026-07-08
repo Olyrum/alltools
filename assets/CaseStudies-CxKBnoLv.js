@@ -31,9 +31,15 @@ import{a as e}from"./chunk-BEqpzyXh.js";import{B as t,D as n,F as r,Ht as i,I as
                 <div class="idea-item">
                   <div class="idea-text status ${e.finalizado?`finalizado`:``}">
                     <strong>${e.emPauta?`[Em Pauta] `:``}</strong>
+                    ${e.viavel?`<strong style="color: #10b981;">[VIÁVEL] </strong>`:``}
                     ${e.texto}
                     ${e.finalizado?` (Finalizado)`:``}
                   </div>
+                  ${e.obsDesenvolvimento?`
+                    <div style="background: #ecfdf5; padding: 6px 10px; border-left: 3px solid #10b981; margin-top: 6px; font-size: 0.88em; color: #065f46;">
+                      <strong>💻 Obs. Dev:</strong> ${e.obsDesenvolvimento}
+                    </div>
+                  `:``}
                   ${e.imagens&&e.imagens.length>0?`
                     <div class="images-container">
                       ${e.imagens.map(e=>`<img src="${e.url}" alt="${e.nome}" />`).join(``)}
@@ -120,9 +126,15 @@ import{a as e}from"./chunk-BEqpzyXh.js";import{B as t,D as n,F as r,Ht as i,I as
                     <li>
                       <div class="idea-text">
                         <strong>${e.emPauta?`[Em Pauta] `:``}</strong>
+                        ${e.viavel?`<strong style="color: #10b981;">[VIÁVEL] </strong>`:``}
                         ${e.texto}
                         ${e.finalizado?` (Finalizado)`:``}
                       </div>
+                      ${e.obsDesenvolvimento?`
+                        <div style="background: #ecfdf5; padding: 6px 10px; border-left: 3px solid #10b981; margin-top: 6px; font-size: 0.88em; color: #065f46;">
+                          <strong>💻 Obs. Dev:</strong> ${e.obsDesenvolvimento}
+                        </div>
+                      `:``}
                       <div class="idea-meta">
                         Autor: ${e.autor||`Desconhecido`} - Data: ${new Date(e.criadoEm).toLocaleDateString(`pt-BR`)}
                       </div>
